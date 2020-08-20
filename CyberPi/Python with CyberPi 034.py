@@ -28,7 +28,7 @@ import time
 cyberpi.cloud.setkey("输入你的云服务授权码")
 cyberpi.console.clear()
 cyberpi.console.println("童芯派启动成功！")
-cyberpi.wifi.connect("Maker-guest", "makeblock")
+cyberpi.wifi.connect("输入WIFI名称", "输入WIFI密码")
 cyberpi.console.println("WIFI连接中...")
 while not cyberpi.wifi.is_connect():
     pass

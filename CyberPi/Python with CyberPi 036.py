@@ -1,22 +1,22 @@
 """"
-名称：035 童芯派的语音识别
+名称：036 童芯派的TTS功能
 硬件： 童芯派
-功能介绍：童芯派设置了云服务授权码，并连接WIFI后可以，调用云服务相关的API实现，语音识别功能。
-        当按键A按下，开始语音识别，屏幕上识别语音识别后的结果。
+功能介绍：简单的模拟一个登录界面
 
 难度：⭐⭐⭐
 
 支持的模式：上传、在线都支持
 
 使用到的API及功能解读：
-1. cyberpi.cloud.listen(str, int)
-   童芯派语音识别API,str处填入要识别的语言，如“chinese”,int处填入时间
-   表示要语音识别的时间。
+1. cyberpi.cloud.tts(language, message)
+  朗读对应文本。参数：
+• language str，有效值为："chinese"：汉语；"english"：英语；表示需要朗读的语种。
+• message str，表示朗读的文本内容。
 
-2.cyberpi.cloud.listen_result()
-  语音识别结果的API，返回的结果可以存放在变量当中。
-
-
+2.cyberpi.cloud.translate(language, message)
+  翻译对应语种的文本。参数：
+• language str，有效值为："chinese"：中文；"english"：英文；表示需要翻译为的语种。
+• message str，表示需要翻译的文本内容。
 
 """
 # ---------程序分割线----------------程序分割线----------------程序分割线----------
@@ -24,7 +24,7 @@
 import cyberpi
 import time
 
-cyberpi.cloud.setkey("填入你的云服务授权码")
+cyberpi.cloud.setkey("请输入自己的云服务授权码")
 cyberpi.console.clear()
 cyberpi.console.println("童芯派启动成功！")
 cyberpi.wifi.connect("输入WIFI名称", "输入WIFI密码")
@@ -45,4 +45,6 @@ while True:
         result = cyberpi.cloud.listen_result()
         cyberpi.console.println("识别结果： " + result)
         cyberpi.led.off()
-
+        cyberpi.cloud.tts("chinese", result)
+        translate = cyberpi.cloud.translate("english", result)
+        cyberpi.console.println(translate)
