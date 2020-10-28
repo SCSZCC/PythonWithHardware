@@ -20,7 +20,7 @@ import time
 
 client = mqtt.Client()
 
-MQHOST = "填入可用的服务器"
+MQHOST = "填入服务器地址"
 MQPORT = 1883
 
 def mq_connect():
@@ -39,9 +39,9 @@ def on_subscribe(topic):
 
 mq_connect()
 a = 0
+on_subscribe("test/123/abc")
 while True:
     on_publish("test/123/abc", a)
-    on_subscribe("test/123/abc")
     a += 1
     time.sleep(0.8)
 
