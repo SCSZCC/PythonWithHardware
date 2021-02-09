@@ -15,6 +15,7 @@
 import cyberpi
 from pynput.keyboard import Key, Controller
 import time
+
 keyboard = Controller()
 cyberpi.console.clear()
 cyberpi.led.on(0, 0, 0)
