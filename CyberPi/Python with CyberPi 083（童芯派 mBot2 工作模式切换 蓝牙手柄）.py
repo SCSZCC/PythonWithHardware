@@ -1,40 +1,31 @@
 """"
-名称：077 童芯派 蓝牙手柄遥控mBot2
+名称：083 童芯派 mBot2 工作模式切换 蓝牙手柄
 硬件： 童芯派
 功能介绍：
-通过蓝牙遥控手柄实现对mBot2的控制。同时部分功能控制能会结合童芯派的灯光功能进行呈现。
+通过蓝牙手柄上的按键切换蓝牙mBot2的工作模式。
+如自动化模式可以切换至自动巡线状态下，手动控制下可以通过蓝牙手柄控制mBot2
 
-使用到的API及功能解读：
-1.import gamepad
-导入蓝牙遥控手柄的相关的功能
-2.gamepad.get_joystick('摇杆方向')
-蓝牙手柄两个摇杆控制的API，括号内填入参数 'Lx' 'Ly' 'Rx' 'Ry'
-每个摇杆数值区间如下所示：
 
-          255
--255   摇杆中间为0   255
-          -255
-
-3.gamepad.is_key_pressed()
-该API用于手柄上的按键是否按下了。
-
-4.math.fabs()
-计算绝对值
-
-难度：⭐⭐⭐⭐
+难度：⭐⭐⭐⭐⭐
 支持的模式：上传模式
 无
 
 """
 # ---------程序分割线----------------程序分割线----------------程序分割线----------
 import cyberpi
-import gamepad
+import time
 import math
+import gamepad
 import mbot2
 
 
+def line_follow(base_power, kp):
+    right_power = -1 * (base_power +kp * cyberpi.quad_rgb_sensor.get_offset_track(1))
+    left_power = base_power - (kp * cyberpi.quad_rgb_sensor.get_offset_track(1))
+    cyberpi.mbot2.drive_power(left_power, right_power)
 
-while True:
+
+def remote_control():
     if not (math.fabs(gamepad.get_joystick('Ly'))<3 and math.fabs(gamepad.get_joystick('Ly'))<3):
         mbot2.drive_speed(((gamepad.get_joystick('Lx') + gamepad.get_joystick('Ly'))) / 2.55, ((gamepad.get_joystick('Lx') - gamepad.get_joystick('Ly'))) / 2.55)
     else:
@@ -56,3 +47,27 @@ while True:
                     else:
                         mbot2.EM_stop("ALL")
                         cyberpi.led.off("all")
+
+
+status = 1
+cyberpi.display.label("遥控模式", 24, 'center')
+while True:
+    if gamepad.is_key_pressed('Start'):
+        status += 1
+        time.sleep(1)
+        if status == 2:
+            cyberpi.display.label("巡线模式", 24, 'center')
+        elif status >= 3:
+            status = 1
+            cyberpi.display.label("遥控模式", 24, 'center')
+        cyberpi.audio.play_until('wake')
+    if status == 1:
+        remote_control()
+    elif status == 2:
+        line_follow(55, 0.6)
+    
+
+
+
+
+
