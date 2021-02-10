@@ -15,7 +15,6 @@ import random
 import event
 import cyberpi
 
-# initialize variables
 cyberpi.wifi_broadcast.start()
 
 
