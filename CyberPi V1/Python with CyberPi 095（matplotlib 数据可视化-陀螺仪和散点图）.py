@@ -32,8 +32,6 @@ plt.ion()
 plt.figure(figsize=(15, 8))
 
 while True:
-    hum = cyberpi.humiture.get_humidity()
-    temp = cyberpi.humiture.get_temp()
     plt.clf()
     y_locator = plt.MultipleLocator(10)
     x_locator = plt.MultipleLocator(10)
