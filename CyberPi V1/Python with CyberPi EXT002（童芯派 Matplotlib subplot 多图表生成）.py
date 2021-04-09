@@ -1,5 +1,5 @@
 """"
-名称：EXT 001 童芯派 Matplotlib subplot多图表生成
+名称：EXT 002 童芯派 Matplotlib subplot多图表生成
 硬件： 童芯派 
 功能介绍：
 利用subplot功能，在一个画板当中生成多个图表。

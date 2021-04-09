@@ -1,5 +1,5 @@
 """"
-名称：54  童芯派控制Tello无人机（MicroPython usocket标准库）
+名称：054  童芯派控制Tello无人机（MicroPython usocket标准库）
 硬件： 童芯派
 功能介绍：简单的利用童芯派实现对Tello无人机的起飞降落控制。
 
